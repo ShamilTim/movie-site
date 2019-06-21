@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col pt-5">
+            <div class="card">
+                <h5 class="card-header">Details</h5>
+                <div class="card-body">
+                    <div class="card mb-3" >
+                      <div class="row no-gutters">
+                        <div class="col-md-3">
+                          <img src="..." class="card-img" alt="...">
+                        </div>
+                        <div class="col-md-9">
+                          <div class="card-body">
+                            <h5 class="card-title">{{ cartoon.title }}</h5>
+                              <table style="table-layout: fixed" class="table table-sm table-borderless">
+                                  <tbody>
+                                      <tr>
+                                          <th style="width: 20px" align="left">Release Year: </th>
+                                          <td style="width: 80px" align="left">{{ cartoon.release_year }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Country: </th>
+                                          <td>{{ cartoon.country }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Method of creation: </th>
+                                          <td>{{ cartoon.method_of_creation }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Director: </th>
+                                          <td>{{ cartoon.director }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Genres: </th>
+                                          <td>{{ cartoon.genres }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Brief Description: </th>
+                                          <td>{{ cartoon.brief_description }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Certificate: </th>
+                                          <td>{{ cartoon.certificate }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Duration: </th>
+                                          <td>{{ cartoon.duration }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Runtime: </th>
+                                          <td>{{ cartoon.runtime }}</td>
+                                      </tr>
+                                      <tr>
+                                          <th>Tags: </th>
+                                          <td>{{ cartoon.tags }}</td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <a href="#" class="btn btn-outline-primary">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
