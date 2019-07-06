@@ -30,14 +30,16 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ url_for('add_feature') }}">Feature Film</a>
-                        <a class="dropdown-item" href="#">Documentary Film</a>
-                        <a class="dropdown-item" href="#">Cartoon</a>
+                        <a class="dropdown-item" href="{{ url_for('add_documentary') }}">Documentary Film</a>
+                        <a class="dropdown-item" href="{{ url_for('add_cartoon') }}">Cartoon</a>
                     </div>
                 </div>
                 <div><label for="search" class="col-sm-6 col-form-label">Search:</label></div>
                 <div class="col-sm-5">
                     <input name="search" type="text" class="form-control" id="search" placeholder="Search">
                 </div>
+                <div><a href="{{ url_for('export_csv') }}"><button style="margin-bottom: 10px" type="button" class="btn btn-outline-info"
+            >Export CSV</button></a></div>
             </div>
             </div>
             <div class="card text-center">

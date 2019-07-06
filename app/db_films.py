@@ -1,6 +1,6 @@
 import sqlite3
 
-from app.domain import Film
+from app.domain import Film, Feature, Documentary, Cartoon
 
 
 def open_db(url):
@@ -13,26 +13,62 @@ def get_films(db):
     with db:
         cursor = db.cursor()
         cursor.execute('''
-        SELECT id, title, release_year, country, director, brief_description, certificate, runtime, tags
-        FROM feature_films
-        UNION
-        SELECT id, title, release_year, country, director, brief_description, certificate, runtime, tags
-        FROM documentary_films
-        UNION
-        SELECT id, title, release_year, country, director, brief_description, certificate, runtime, tags
-        FROM cartoons;
-          ''')
+        SELECT id, title, release_year, country, director, main_roles, genres, box_office,
+        brief_description, certificate, runtime, tags
+        FROM feature_films;
+        ''')
         items = []
         for row in cursor:
             items.append(
-                Film(
+                Feature(
                     row['id'],
                     row['title'],
                     row['release_year'],
                     row['country'],
                     row['director'],
+                    row['main_roles'],
+                    row['genres'],
+                    row['box_office'],
                     row['brief_description'],
                     row['certificate'],
+                    row['runtime'],
+                    row['tags']
+                ))
+        cursor.execute('''
+        SELECT id, title, release_year, country, director, category, brief_description, certificate, runtime, tags
+        FROM documentary_films;
+        ''')
+        for row in cursor:
+            items.append(
+                Documentary(
+                    row['id'],
+                    row['title'],
+                    row['release_year'],
+                    row['country'],
+                    row['director'],
+                    row['category'],
+                    row['brief_description'],
+                    row['certificate'],
+                    row['runtime'],
+                    row['tags']
+                ))
+        cursor.execute('''
+        SELECT id, title, release_year, country, method_of_creation, director, genres, brief_description, certificate, 
+        duration, runtime, tags
+        FROM cartoons;''')
+        for row in cursor:
+            items.append(
+                Cartoon(
+                    row['id'],
+                    row['title'],
+                    row['release_year'],
+                    row['country'],
+                    row['method_of_creation'],
+                    row['director'],
+                    row['genres'],
+                    row['brief_description'],
+                    row['certificate'],
+                    row['duration'],
                     row['runtime'],
                     row['tags']
                 )
@@ -40,60 +76,24 @@ def get_films(db):
         return items
 
 
-def get_film_by_id(db, id):
+def search_films_by_title(db, title):
     with db:
         cursor = db.cursor()
-        cursor.execute('''
-        SELECT id, title, release_year, country, director, brief_description, certificate, runtime, tags
+        rows = cursor.execute('''
+        SELECT id, title, release_year, country, director, main_roles, genres, box_office,
+        brief_description, certificate, runtime, tags
         FROM feature_films
-        UNION
-        SELECT id, title, release_year, country, director, brief_description, certificate, runtime, tags 
-        FROM documentary_films
-        UNION
-        SELECT id, title, release_year, country, director, brief_description, certificate, runtime, tags
-        FROM cartoons
-        WHERE id = :id''', {'id': id})
-        for row in cursor:
-            return Film(
-                row['id'],
-                row['title'],
-                row['release_year'],
-                row['country'],
-                row['director'],
-                row['brief_description'],
-                row['certificate'],
-                row['runtime'],
-                row['tags']
-            )
+        WHERE title LIKE title = :title''', {'title': title})
+        for row in rows:
+            print(row)
+            type(row)
+            return row
 
-
-def remove(db, id):
-    with db:
-        cursor = db.cursor()
-        cursor.execute('DELETE FROM films WHERE id = :id', {'id': id})
-        db.commit()
-
-
-# def verify_id_feature(db, id):
-#    with db:
-#        cursor = db.cursor()
-#        cursor.execute('SELECT id FROM feature_films WHERE id = :id LIMIT 1', {'id': id})
-#        row = cursor.fetchone()
-#        print(row)
-#        return row
-
-
-# def verify_id_documentary(db, id):
-#    with db:
-#        cursor = db.cursor()
-#        cursor.execute('SELECT id FROM documentary_films WHERE id = :id LIMIT 1', {'id': id})
-#        row = cursor.fetchone()
-#        return row
-
-
-# def verify_id_cartoon(db, id):
-#    with db:
-#        cursor = db.cursor()
-#        cursor.execute('SELECT id FROM cartoons WHERE id = :id LIMIT 1', {'id': id})
-#        row = cursor.fetchone()
-#        return row
+# def search_films_by_title(films, title):
+#     result = []
+#     for film in films:
+#         if film['title'] == title:
+#             result.append(film)
+#             print(film)
+#     print(result)
+#     return result

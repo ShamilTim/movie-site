@@ -17,11 +17,15 @@
                 <h5 class="card-header">Removal</h5>
                 <div class="card-body">
                     <div>
-                        <div class="row no-gutters"><h5><b>Are you sure you want to delete: "{{ film.title }}"?</b></h5></div>
+                        <div class="row no-gutters"><h5><b>Are you sure you want to delete: "{{ cartoon.title }}"?</b></h5></div>
                     </div>
-                    <form action="{{ url_for('remove', id=film.id) }}" method="post">
-                        <button class="btn btn-outline-danger">Remove</button>
+                    <form action="{{ url_for('remove_cartoon', id=cartoon.id) }}" method="post">
+                        <button class="btn btn-outline-danger">Delete</button>
                     </form>
+                    <div>
+                    <a href="{{ url_for('index') }}"><button style="margin-top: 10px" type="button"
+                                                             class="btn btn-outline-primary">Home Page</button></a>
+                    </div>
                 </div>
             </div>
         </div>

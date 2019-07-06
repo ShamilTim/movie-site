@@ -14,7 +14,7 @@ def init_db(db):
         cursor = db.cursor()
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS feature_films(
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id TEXT PRIMARY KEY,
             title TEXT NOT NULL,
             release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
             country TEXT NOT NULL,
@@ -23,7 +23,7 @@ def init_db(db):
             genres TEXT NOT NULL,
             box_office INTEGER NOT NULL,
             brief_description TEXT NOT NULL,
-            certificate INTEGER NOT NULL CHECK ( certificate >= 0 ) DEFAULT 0,
+            certificate TEXT NOT NULL,
             runtime TEXT NOT NULL,
             tags TEXT NOT NULL
         );
@@ -54,6 +54,7 @@ def get_feature_films(db):
                     row['tags']
                 )
             )
+        print(items)
         return items
 
 
@@ -61,10 +62,11 @@ def add_feature(db, feature_films):
     with db:
         cursor = db.cursor()
         cursor.execute('''
-        INSERT INTO feature_films(title, release_year, country, director, main_roles, genres, box_office,
-        brief_description, certificate, runtime, tags) VALUES (:title, :release_year, :country, :director, :main_roles,
+        INSERT INTO feature_films(id, title, release_year, country, director, main_roles, genres, box_office,
+        brief_description, certificate, runtime, tags) VALUES (:id, :title, :release_year, :country, :director, :main_roles,
         :genres, :box_office, :brief_description, :certificate, :runtime, :tags)''',
-                       {'title': feature_films.title,
+                       {'id': feature_films.id,
+                        'title': feature_films.title,
                         'release_year': feature_films.release_year,
                         'country': feature_films.country,
                         'director': feature_films.director,
@@ -98,3 +100,24 @@ def get_feature_by_id(db, id):
                 row['runtime'],
                 row['tags']
             )
+
+
+def update_feature(db, feature_film):
+    with db:
+        cursor = db.cursor()
+        cursor.execute('''UPDATE feature_films SET title = :title, release_year = :release_year, country = :country,
+        director = :director, main_roles = :main_roles, genres = :genres, box_office = :box_office,
+        brief_description = :brief_description, certificate = :certificate, runtime = :runtime, tags = :tags
+        WHERE id = :id''',
+        {'id': feature_film.id, 'title': feature_film.title, 'release_year': feature_film.release_year, 'country': feature_film.country,
+         'director': feature_film.director, 'main_roles': feature_film.main_roles, 'genres': feature_film.genres,
+         'box_office': feature_film.box_office, 'brief_description': feature_film.brief_description,
+         'certificate': feature_film.certificate, 'runtime': feature_film.runtime, 'tags': feature_film.tags})
+        db.commit()
+
+
+def remove_feature(db, id):
+    with db:
+        cursor = db.cursor()
+        cursor.execute('DELETE FROM feature_films WHERE id = :id', {'id': id})
+        db.commit()

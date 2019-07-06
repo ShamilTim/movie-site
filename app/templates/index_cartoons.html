@@ -30,8 +30,8 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ url_for('add_feature') }}">Feature Film</a>
-                        <a class="dropdown-item" href="#">Documentary Film</a>
-                        <a class="dropdown-item" href="#">Cartoon</a>
+                        <a class="dropdown-item" href="{{ url_for('add_documentary') }}">Documentary Film</a>
+                        <a class="dropdown-item" href="{{ url_for('add_cartoon') }}">Cartoon</a>
                     </div>
                 </div>
                 <div><label for="search" class="col-sm-6 col-form-label">Search:</label></div>

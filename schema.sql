@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS feature_films(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
     release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
     country TEXT NOT NULL,
@@ -8,26 +8,26 @@ CREATE TABLE IF NOT EXISTS feature_films(
     genres TEXT NOT NULL,
     box_office INTEGER NOT NULL,
     brief_description TEXT NOT NULL,
-    certificate INTEGER NOT NULL CHECK ( certificate >= 0 ) DEFAULT 0,
+    certificate TEXT NOT NULL,
     runtime TEXT NOT NULL,
     tags TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS documentary_films(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
     release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
     country TEXT NOT NULL,
     director TEXT NOT NULL,
     category TEXT NOT NULL,
     brief_description TEXT NOT NULL,
-    certificate INTEGER NOT NULL CHECK ( certificate >= 0 ) DEFAULT 0,
+    certificate TEXT NOT NULL,
     runtime TEXT NOT NULL,
     tags TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS cartoons(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
     release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
     country TEXT NOT NULL,
@@ -35,20 +35,20 @@ CREATE TABLE IF NOT EXISTS cartoons(
     director TEXT NOT NULL,
     genres TEXT NOT NULL,
     brief_description TEXT NOT NULL,
-    certificate INTEGER NOT NULL CHECK ( certificate >= 0 ) DEFAULT 0,
+    certificate TEXT NOT NULL,
     duration TEXT NOT NULL,
     runtime TEXT NOT NULL,
     tags TEXT NOT NULL
 );
 
 CREATE TABLE films(
-    film_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    film_id TEXT PRIMARY KEY,
     title TEXT NOT NULL,
     release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
     country TEXT NOT NULL,
     director TEXT NOT NULL,
     brief_description TEXT NOT NULL,
-    certificate INTEGER NOT NULL CHECK ( certificate >= 0 ) DEFAULT 0,
+    certificate TEXT NOT NULL,
     runtime TEXT NOT NULL,
     tags TEXT NOT NULL
 );
@@ -70,4 +70,6 @@ DROP TABLE documentary_films;
 DROP TABLE cartoons;
 
 SELECT * FROM feature_films;
+SELECT * FROM documentary_films;
+SELECT * FROM cartoons;
 SELECT * FROM films;

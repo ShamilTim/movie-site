@@ -30,14 +30,17 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="{{ url_for('add_feature') }}">Feature Film</a>
-                        <a class="dropdown-item" href="#">Documentary Film</a>
-                        <a class="dropdown-item" href="#">Cartoon</a>
+                        <a class="dropdown-item" href="{{ url_for('add_documentary') }}">Documentary Film</a>
+                        <a class="dropdown-item" href="{{ url_for('add_cartoon') }}">Cartoon</a>
                     </div>
                 </div>
                 <div><label for="search" class="col-sm-6 col-form-label">Search:</label></div>
-                <div class="col-sm-5">
-                    <input name="search" type="text" class="form-control" id="search" placeholder="Search">
+                <form>
+                <div class="col-md-12">
+                    <input name="search" value="{{ search }}" type="search" class="form-control" id="search"
+                           placeholder="Search">
                 </div>
+                </form>
             </div>
         </div>
             <div class="card text-center">
@@ -73,7 +76,7 @@
                 {% for film in films %}
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
-                        <td>{{ film.title }}</td>
+                        <td><a href="{{ film | film_sublink }}/{{ film.id }}">{{ film.title }}</a></td>
                         <td>{{ film.release_year }}</td>
                         <td>{{ film.country }}</td>
                         <td>{{ film.brief_description }}</td>
@@ -81,6 +84,9 @@
                         <td>{{ film.runtime }}</td>
                     </tr>
                 {% endfor %}
+                {% if not films %}
+                    <p>No films, try again later</p>
+                {% endif %}
                 </tbody>
             </table>
         </div>

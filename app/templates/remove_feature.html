@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Details</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col pt-5">
+            <div class="card">
+                <h5 class="card-header">Removal</h5>
+                <div class="card-body">
+                    <div>
+                        <div class="row no-gutters"><h5><b>Are you sure you want to delete: "{{ feature_film.title }}"?</b></h5></div>
+                    </div>
+                    <form action="{{ url_for('remove_feature', id=feature_film.id) }}" method="post">
+                        <button class="btn btn-outline-danger">Delete</button>
+                    </form>
+                    <div>
+                    <a href="{{ url_for('index') }}"><button style="margin-top: 10px" type="button"
+                                                             class="btn btn-outline-primary">Home Page</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
