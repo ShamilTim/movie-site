@@ -35,31 +35,31 @@
                     </div>
                 </div>
                 <div><label for="search" class="col-sm-6 col-form-label">Search:</label></div>
-                <form>
-                <div class="col-md-12">
-                    <input name="search" value="{{ search }}" type="search" class="form-control" id="search"
-                           placeholder="Search">
-                </div>
+                <form class="col-sm-5">
+                    <div>
+                        <input name="search" value="{{ search }}" type="search" class="form-control" id="search"
+                               placeholder="Search">
+                    </div>
                 </form>
             </div>
         </div>
-            <div class="card text-center">
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">All movies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('index_feature') }}">Feature Films</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('index_documentary') }}">Documentary Films</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('index_cartoons') }}">Cartoons</a>
-                        </li>
-                    </ul>
-              </div>
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">All movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index_feature') }}">Feature Films</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index_documentary') }}">Documentary Films</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index_cartoons') }}">Cartoons</a>
+                    </li>
+                </ul>
+            </div>
             <table class="table">
                 <thread>
                     <tr>
@@ -85,7 +85,9 @@
                     </tr>
                 {% endfor %}
                 {% if not films %}
-                    <p>No films, try again later</p>
+                    <tr>
+                        <td colspan="7"><p>No films, try again later</p></td>
+                    </tr>
                 {% endif %}
                 </tbody>
             </table>

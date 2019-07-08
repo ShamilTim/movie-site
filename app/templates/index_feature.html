@@ -39,26 +39,27 @@
                     <input name="search" type="text" class="form-control" id="search" placeholder="Search">
                 </div>
                 <div><a href="{{ url_for('export_csv') }}"><button style="margin-bottom: 10px" type="button" class="btn btn-outline-info"
-            >Export CSV</button></a></div>
+                >Export CSV</button></a>
+                </div>
             </div>
+        </div>
+        <div class="card text-center">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">All movies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">Feature Films</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index_documentary') }}">Documentary Films</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index_cartoons') }}">Cartoons</a>
+                    </li>
+                </ul>
             </div>
-            <div class="card text-center">
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('index') }}">All movies</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Feature Films</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('index_documentary') }}">Documentary Films</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('index_cartoons') }}">Cartoons</a>
-                        </li>
-                    </ul>
-              </div>
             <table class="table">
                 <thread>
                     <tr>

@@ -1,3 +1,15 @@
+class ShortFilm:
+    def __init__(self, id, type, title, release_year, country, brief_description, certificate, runtime):
+        self.id = id
+        self.type = type
+        self.title = title
+        self.release_year = release_year
+        self.country = country
+        self.brief_description = brief_description
+        self.certificate = certificate
+        self.runtime = runtime
+
+
 class Film:
     def __init__(self, id, title, release_year, country, director, brief_description, certificate, runtime, tags):
         self.id = id

@@ -20,18 +20,18 @@ def start():
         search = request.args.get('search')
         if search:
             results = db_films.search_films_by_title(db_films.open_db(db_url), search)
-            return render_template('index.html', film=results, search=search)
+            return render_template('index.html', films=results, search=search)
         return render_template('index.html', films=films)
 
     @app.template_filter('film_sublink')
     def film_sublink_filter(film):
-        if isinstance(film, Feature):
+        if film.type == 'FEATURE':
             return '/details_feature'
 
-        if isinstance(film, Documentary):
+        if film.type == 'DOCUMENTARY':
             return '/details_documentary'
 
-        if isinstance(film, Cartoon):
+        if film.type == 'CARTOON':
             return '/details_cartoons'
 
         raise TypeError('Invalid film type')
@@ -236,9 +236,13 @@ def start():
         content = io.StringIO()
         writer = csv.writer(content)
         for feature_film in feature_films:
-            writer.writerow(feature_film)
+            writer.writerow([feature_film.id, feature_film.title, feature_film.release_year, feature_film.country,
+                             feature_film.director, feature_film.main_roles, feature_film.genres,
+                             feature_film.box_office, feature_film.brief_description, feature_film.certificate,
+                             feature_film.runtime, feature_film.tags
+                             ])
         response = make_response(content.getvalue())
-        response.headers['Content-Type'] = 'application/octet-stream'  # скачай
+        response.headers['Content-Type'] = 'application/octet-stream'
         response.headers['Content-Disposition'] = 'inline; filename=exported.csv'
         return response
 

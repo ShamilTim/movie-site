@@ -1,6 +1,6 @@
 import sqlite3
 
-from app.domain import Film, Feature, Documentary, Cartoon
+from app.domain import ShortFilm
 
 
 def open_db(url):
@@ -11,89 +11,66 @@ def open_db(url):
 
 def get_films(db):
     with db:
+        items = []
         cursor = db.cursor()
         cursor.execute('''
-        SELECT id, title, release_year, country, director, main_roles, genres, box_office,
-        brief_description, certificate, runtime, tags
-        FROM feature_films;
-        ''')
-        items = []
-        for row in cursor:
-            items.append(
-                Feature(
-                    row['id'],
-                    row['title'],
-                    row['release_year'],
-                    row['country'],
-                    row['director'],
-                    row['main_roles'],
-                    row['genres'],
-                    row['box_office'],
-                    row['brief_description'],
-                    row['certificate'],
-                    row['runtime'],
-                    row['tags']
-                ))
-        cursor.execute('''
-        SELECT id, title, release_year, country, director, category, brief_description, certificate, runtime, tags
-        FROM documentary_films;
+        SELECT id, title, 'FEATURE' type, release_year, country, brief_description, certificate, runtime
+        FROM feature_films
+        UNION
+        SELECT id, title, 'DOCUMENTARY' type, release_year, country, brief_description, certificate, runtime
+        FROM documentary_films
+        UNION
+        SELECT id, title, 'CARTOON' type, release_year, country, brief_description, certificate, runtime
+        FROM cartoons
         ''')
         for row in cursor:
             items.append(
-                Documentary(
+                ShortFilm(
                     row['id'],
+                    row['type'],
                     row['title'],
                     row['release_year'],
                     row['country'],
-                    row['director'],
-                    row['category'],
                     row['brief_description'],
                     row['certificate'],
-                    row['runtime'],
-                    row['tags']
-                ))
-        cursor.execute('''
-        SELECT id, title, release_year, country, method_of_creation, director, genres, brief_description, certificate, 
-        duration, runtime, tags
-        FROM cartoons;''')
-        for row in cursor:
-            items.append(
-                Cartoon(
-                    row['id'],
-                    row['title'],
-                    row['release_year'],
-                    row['country'],
-                    row['method_of_creation'],
-                    row['director'],
-                    row['genres'],
-                    row['brief_description'],
-                    row['certificate'],
-                    row['duration'],
-                    row['runtime'],
-                    row['tags']
+                    row['runtime']
                 )
             )
         return items
 
 
-def search_films_by_title(db, title):
+def search_films_by_title(db, search):
     with db:
+        items = []
         cursor = db.cursor()
-        rows = cursor.execute('''
-        SELECT id, title, release_year, country, director, main_roles, genres, box_office,
-        brief_description, certificate, runtime, tags
+        cursor.execute('''
+        SELECT id, title, 'FEATURE' type, release_year, country, brief_description, certificate, runtime
         FROM feature_films
-        WHERE title LIKE title = :title''', {'title': title})
-        for row in rows:
-            print(row)
-            type(row)
-            return row
-
-# def search_films_by_title(films, title):
-#     result = []
-#     for film in films:
-#         if film['title'] == title:
-#             result.append(film)
-#             print(film)
-#     print(result)
-#     return result
+        WHERE title LIKE :search OR release_year LIKE :search OR country LIKE :search OR director LIKE :search
+        OR main_roles LIKE :search OR genres LIKE :search OR certificate LIKE :search OR tags LIKE :search
+        UNION
+        SELECT id, title, 'DOCUMENTARY' type, release_year, country, brief_description, certificate, runtime
+        FROM documentary_films
+        WHERE title LIKE :search OR release_year LIKE :search OR country LIKE :search OR director LIKE :search
+        OR category LIKE :search OR certificate LIKE :search OR tags LIKE :search
+        UNION
+        SELECT id, title, 'CARTOON' type, release_year, country, brief_description, certificate, runtime
+        FROM cartoons
+        WHERE title LIKE :search OR release_year LIKE :search OR country LIKE :search OR method_of_creation LIKE :search
+        OR director LIKE :search OR genres LIKE :search OR certificate LIKE :search OR duration LIKE :search
+        OR tags LIKE :search
+        ''', {'search': '%' + search + '%'})
+        for row in cursor:
+            items.append(
+                ShortFilm(
+                    row['id'],
+                    row['type'],
+                    row['title'],
+                    row['release_year'],
+                    row['country'],
+                    row['brief_description'],
+                    row['certificate'],
+                    row['runtime']
+                )
+            )
+        return items
