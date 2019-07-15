@@ -1,5 +1,5 @@
-INSERT INTO feature_films(id, image, title, release_year, country, director, main_roles, genres, box_office, brief_description,
-                          certificate, runtime, tags) VALUES
+INSERT INTO feature_films(id, image, title, release_year, country, director, main_roles, genres, box_office,
+                          brief_description, certificate, runtime, tags, trailer) VALUES
 (
  'cbad028d-2180-4e9d-b217-17d2c26a79e1',
  '7455db87-35f3-4818-8b87-6856fd0488b1.jpg',
@@ -13,7 +13,8 @@ INSERT INTO feature_films(id, image, title, release_year, country, director, mai
  'Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.',
  '16+',
  '2:22',
- 'freedom, hope, prison, escape, system'
+ 'freedom, hope, prison, escape, system',
+ 'https://www.youtube.com/embed/NmzuHjWmXOc'
  ),
 (
  '4b0d6d45-b489-4521-bf6c-a25b529fa2ad',
@@ -28,7 +29,8 @@ INSERT INTO feature_films(id, image, title, release_year, country, director, mai
  'The lives of guards on Death Row are affected by one of their charges: a black man accused of child murder and rape, yet who has a mysterious gift.',
  '16+',
  '3:09',
- 'good, hope, miracle, prison, struggle'
+ 'good, hope, miracle, prison, struggle',
+ 'https://www.youtube.com/embed/Ki4haFrqSrw'
  ),
 (
  '99a96677-7e62-4d1d-91e4-841312945061',
@@ -43,10 +45,12 @@ INSERT INTO feature_films(id, image, title, release_year, country, director, mai
  'The presidencies of Kennedy and Johnson, the events of Vietnam, Watergate, and other history unfold through the perspective of an Alabama man with an IQ of 75.',
  '12+',
  '2:22',
- 'development, kind, military, naive, president, service'
+ 'development, kind, military, naive, president, service',
+ 'https://www.youtube.com/embed/XHhAG-YLdk8'
  );
 
-INSERT INTO documentary_films(id, image, title, release_year, country, director, category, brief_description, certificate, runtime, tags) VALUES
+INSERT INTO documentary_films(id, image, title, release_year, country, director, category, brief_description,
+                              certificate, runtime, tags, trailer) VALUES
 (
  'f8ccc193-e136-4e5b-a95e-5f887ff02df9',
  'b8d7ca32-631f-48ba-a9e9-a1b96e0b8949.jpg',
@@ -58,7 +62,8 @@ INSERT INTO documentary_films(id, image, title, release_year, country, director,
  'Six one-hour episodes that tell the story of the inner workings of the brain and take viewers on a visually spectacular journey into why they feel and think the things they do.',
  '12+',
  '6 episodes for 1 hour',
- 'science, brain, reflexes, consciousness, mind'
+ 'science, brain, reflexes, consciousness, mind',
+ 'https://www.youtube.com/embed/cTl2Odxgr54'
 ),
 (
  'fed1c34a-71a6-497f-b4cc-2ad0c443df95',
@@ -71,7 +76,8 @@ INSERT INTO documentary_films(id, image, title, release_year, country, director,
  'A look at the Apollo 11 mission to land on the moon led by commander Neil Armstrong and pilots Buzz Aldrin and Michael Collins.',
  '0+',
  '1:23',
- 'space, Neil Armstrong, Moon, mission, Earth'
+ 'space, Neil Armstrong, Moon, mission, Earth',
+ 'https://www.youtube.com/embed/RwNkfLxLG8c'
 ),
 (
  'd4991c9b-c759-485c-8253-cb14c3a99a0d',
@@ -84,11 +90,12 @@ INSERT INTO documentary_films(id, image, title, release_year, country, director,
  'The life of Mikhail Gorbachev, the eighth and final President of the Soviet Union in chronological order.',
  '12+',
  '01:30',
- 'history, USSR, breakup, cold war, GDR(German Democratic Republic)'
+ 'history, USSR, breakup, cold war, GDR(German Democratic Republic)',
+ 'https://www.youtube.com/embed/c18V6Y3HL38'
 );
 
 INSERT INTO cartoons(id, image, title, release_year, country, method_of_creation, director, genres, brief_description,
-                 certificate, duration, runtime, tags) VALUES
+                 certificate, duration, runtime, tags, trailer) VALUES
 (
  '9c004bcb-5e7b-48d3-9fb8-39f3261f0941',
  '8df02e47-653e-46b6-9f0e-dce126a38368.jpg',
@@ -102,7 +109,8 @@ INSERT INTO cartoons(id, image, title, release_year, country, method_of_creation
  '6+',
  'full-length',
  '01:27',
- 'pets, relationship, dogs, homecoming, secret life'
+ 'pets, relationship, dogs, homecoming, secret life',
+ 'https://www.youtube.com/embed/-yPuWcCykNk'
 ),
 (
  'e50c366c-9da7-42b6-a537-f44efcc634d2',
@@ -117,7 +125,8 @@ INSERT INTO cartoons(id, image, title, release_year, country, method_of_creation
  '12+',
  'short-length',
  '1:03',
- 'three stories, romance, Japan, relationship, love'
+ 'three stories, romance, Japan, relationship, love',
+ 'https://www.youtube.com/embed/wdM7athAem0'
 ),
 (
  'd0f1f200-a19a-40e4-8c78-54b99332a388',
@@ -132,5 +141,6 @@ INSERT INTO cartoons(id, image, title, release_year, country, method_of_creation
  '0+',
  'full-length',
  '1:21',
- 'sheep, dogs, farm, mutual assistance, rescue'
+ 'sheep, dogs, farm, mutual assistance, rescue',
+ 'https://www.youtube.com/embed/0_4vs0nCCUI'
 )

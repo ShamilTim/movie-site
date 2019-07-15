@@ -17,6 +17,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/tablesort.css" type="text/css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $("Table").tablesorter({sortList: [[0,0]]});
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -41,8 +48,8 @@
                                placeholder="Search">
                     </div>
                 </form>
-                <div><a href="{{ url_for('export_csv_films') }}"><button style="margin-bottom: 10px" type="button" class="btn btn-outline-info"
-                >Export CSV</button></a>
+                <div><a href="{{ url_for('export_csv_films') }}">
+                    <button style="margin-bottom: 10px" type="button" class="btn btn-outline-info">Export CSV</button></a>
                 </div>
             </div>
         </div>
@@ -63,7 +70,7 @@
                     </li>
                 </ul>
             </div>
-            <table class="table">
+            <table id="Table" class="table">
                 <thead>
                     <tr>
                         <th scope="col">#</th>

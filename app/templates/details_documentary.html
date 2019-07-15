@@ -20,8 +20,8 @@
                       <div class="row no-gutters">
                         <div class="col-md-3">
                           {% if documentary_film.image %}
-                            <img src="{{ url_for('static', filename='images/' + documentary_film.image) }}"
-                                 class="card-img" alt="No picture">
+                              <img src="{{ url_for('static', filename='images/' + documentary_film.image) }}"
+                                   class="card-img" alt="No picture">
                           {% endif %}
                         </div>
                         <div class="col-md-9">
@@ -63,6 +63,9 @@
                                       </tr>
                                   </tbody>
                               </table>
+                              <iframe width="560" height="315" src="{{ documentary_film.trailer }}" frameborder="0"
+                                      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                      allowfullscreen style="margin-left: 75px"></iframe>
                           </div>
                         </div>
                       </div>

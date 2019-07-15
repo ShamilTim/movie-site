@@ -83,9 +83,10 @@ def start():
         certificate = request.form['certificate']
         runtime = request.form['runtime']
         tags = request.form['tags']
+        trailer = request.form['trailer']
         id = str(uuid.uuid4())
         feature_film = Feature(id, image, title, release_year, country, director, main_roles, genres, box_office,
-                               brief_description, certificate, runtime, tags)
+                               brief_description, certificate, runtime, tags, trailer)
         db_feature.add_feature(db_feature.open_db(db_url), feature_film)
         return redirect(url_for('index_feature'))
 
@@ -109,9 +110,10 @@ def start():
         certificate = request.form['certificate']
         runtime = request.form['runtime']
         tags = request.form['tags']
+        trailer = request.form['trailer']
         uuid_id = str(uuid.uuid4())
         documentary_film = Documentary(uuid_id, image, title, release_year, country, director, category, brief_description,
-                                       certificate, runtime, tags)
+                                       certificate, runtime, tags, trailer)
         db_documentary.add_documentary(db_documentary.open_db(db_url), documentary_film)
         return redirect(url_for('index_documentary'))
 
@@ -137,9 +139,10 @@ def start():
         duration = request.form['duration']
         runtime = request.form['runtime']
         tags = request.form['tags']
+        trailer = request.form['trailer']
         uuid_id = str(uuid.uuid4())
         cartoon = Cartoon(uuid_id, image, title, release_year, country, method_of_creation, director, genres, brief_description,
-                          certificate, duration, runtime, tags)
+                          certificate, duration, runtime, tags, trailer)
         db_cartoons.add_cartoon(db_cartoons.open_db(db_url), cartoon)
         return redirect(url_for('index_cartoons'))
 
@@ -181,8 +184,9 @@ def start():
         certificate = request.form['certificate']
         runtime = request.form['runtime']
         tags = request.form['tags']
+        trailer = request.form['trailer']
         feature_film = Feature(id, image, title, release_year, country, director, main_roles, genres, box_office,
-                               brief_description, certificate, runtime, tags)
+                               brief_description, certificate, runtime, tags, trailer)
         db_feature.update_feature(db_feature.open_db(db_url), feature_film)
         return redirect(url_for('details_feature_by_id', id=id))
 
@@ -207,8 +211,9 @@ def start():
         certificate = request.form['certificate']
         runtime = request.form['runtime']
         tags = request.form['tags']
+        trailer = request.form['trailer']
         documentary_film = Documentary(id, image, title, release_year, country, director, category, brief_description,
-                                       certificate, runtime, tags)
+                                       certificate, runtime, tags, trailer)
         db_documentary.update_documentary(db_documentary.open_db(db_url), documentary_film)
         return redirect(url_for('details_documentary_by_id', id=id))
 
@@ -235,8 +240,9 @@ def start():
         duration = request.form['duration']
         runtime = request.form['runtime']
         tags = request.form['tags']
+        trailer = request.form['trailer']
         cartoon = Cartoon(id, image, title, release_year, country, method_of_creation, director, genres,
-                          brief_description, certificate, duration, runtime, tags)
+                          brief_description, certificate, duration, runtime, tags, trailer)
         db_cartoons.update_cartoon(db_cartoons.open_db(db_url), cartoon)
         return redirect(url_for('details_cartoon_by_id', id=id))
 
@@ -277,7 +283,7 @@ def start():
         writer = csv.writer(content)
         for film in films:
             writer.writerow([film.id, film.title, film.release_year, film.country, film.brief_description,
-                             film.certificate, film.runtime,
+                             film.certificate, film.runtime, film.trailer
                              ])
         response = make_response(content.getvalue())
         response.headers['Content-Type'] = 'application/octet-stream'
@@ -293,7 +299,7 @@ def start():
             writer.writerow([feature_film.id, feature_film.title, feature_film.release_year, feature_film.country,
                              feature_film.director, feature_film.main_roles, feature_film.genres,
                              feature_film.box_office, feature_film.brief_description, feature_film.certificate,
-                             feature_film.runtime, feature_film.tags
+                             feature_film.runtime, feature_film.tags, feature_film.trailer
                              ])
         response = make_response(content.getvalue())
         response.headers['Content-Type'] = 'application/octet-stream'
@@ -309,7 +315,7 @@ def start():
             writer.writerow([documentary_film.id, documentary_film.title, documentary_film.release_year,
                              documentary_film.country, documentary_film.director, documentary_film.category,
                              documentary_film.brief_description, documentary_film.certificate, documentary_film.runtime,
-                             documentary_film.tags
+                             documentary_film.tags, documentary_film.trailer
                              ])
         response = make_response(content.getvalue())
         response.headers['Content-Type'] = 'application/octet-stream'
@@ -324,7 +330,7 @@ def start():
         for cartoon in cartoons:
             writer.writerow([cartoon.id, cartoon.title, cartoon.release_year, cartoon.country,
                              cartoon.method_of_creation, cartoon.director, cartoon.genres, cartoon.brief_description,
-                             cartoon.certificate, cartoon.duration, cartoon.runtime, cartoon.tags
+                             cartoon.certificate, cartoon.duration, cartoon.runtime, cartoon.tags, cartoon.trailer
                              ])
         response = make_response(content.getvalue())
         response.headers['Content-Type'] = 'application/octet-stream'

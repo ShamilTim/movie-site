@@ -17,6 +17,13 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/tablesort.css" type="text/css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.1/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        $("Table").tablesorter({sortList: [[0,0]]});
+        });
+    </script>
 </head>
 <body>
 <div class="container">
@@ -39,8 +46,7 @@
                     <input name="search" type="text" class="form-control" id="search" placeholder="Search">
                 </div>
                 <div><a href="{{ url_for('export_csv_cartoons') }}">
-                    <button style="margin-bottom: 10px" type="button" class="btn btn-outline-info">Export CSV
-                    </button></a>
+                    <button style="margin-bottom: 10px" type="button" class="btn btn-outline-info">Export CSV</button></a>
                 </div>
             </div>
         </div>
@@ -61,8 +67,8 @@
                     </li>
                 </ul>
             </div>
-            <table class="table">
-                <thread>
+            <table id="Table" class="table">
+                <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
@@ -72,7 +78,7 @@
                         <th scope="col">Certificate</th>
                         <th scope="col">Runtime</th>
                     </tr>
-                </thread>
+                </thead>
                 <tbody>
                 {% for cartoon in cartoons %}
                     <tr>

@@ -26,7 +26,8 @@ def init_db(db):
             certificate TEXT NOT NULL,
             duration TEXT NOT NULL,
             runtime TEXT NOT NULL,
-            tags TEXT NOT NULL
+            tags TEXT NOT NULL,
+            trailer TEXT NOT NULL 
         );
         ''')
         db.commit()
@@ -36,7 +37,7 @@ def get_cartoons(db):
     with db:
         cursor = db.cursor()
         cursor.execute('''SELECT id, image, title, release_year, country, method_of_creation, director, genres,
-        brief_description, certificate, duration, runtime, tags FROM cartoons''')
+        brief_description, certificate, duration, runtime, tags, trailer FROM cartoons''')
         items = []
         for row in cursor:
             items.append(
@@ -53,7 +54,8 @@ def get_cartoons(db):
                     row['certificate'],
                     row['duration'],
                     row['runtime'],
-                    row['tags']
+                    row['tags'],
+                    row['trailer']
                 )
             )
         return items
@@ -64,8 +66,8 @@ def add_cartoon(db, cartoons):
         cursor = db.cursor()
         cursor.execute('''
         INSERT INTO cartoons(id, image, title, release_year, country, method_of_creation, director, genres, brief_description,
-        certificate, duration, runtime, tags) VALUES (:id, :image, :title, :release_year, :country, :method_of_creation, :director,
-        :genres, :brief_description, :certificate, :duration, :runtime, :tags)''',
+        certificate, duration, runtime, tags, trailer) VALUES (:id, :image, :title, :release_year, :country, :method_of_creation, :director,
+        :genres, :brief_description, :certificate, :duration, :runtime, :tags, :trailer)''',
                        {'id': cartoons.id,
                         'image': cartoons.image,
                         'title': cartoons.title,
@@ -78,7 +80,8 @@ def add_cartoon(db, cartoons):
                         'certificate': cartoons.certificate,
                         'duration': cartoons.duration,
                         'runtime': cartoons.runtime,
-                        'tags': cartoons.tags})
+                        'tags': cartoons.tags,
+                        'trailer': cartoons.trailer})
         db.commit()
 
 
@@ -86,7 +89,7 @@ def get_cartoons_by_id(db, id):
     with db:
         cursor = db.cursor()
         cursor.execute('''SELECT id, image, title, release_year, country, method_of_creation, director, genres,
-        brief_description, certificate, duration, runtime, tags FROM cartoons WHERE id = :id''', {'id': id})
+        brief_description, certificate, duration, runtime, tags, trailer FROM cartoons WHERE id = :id''', {'id': id})
         for row in cursor:
             return Cartoon(
                 row['id'],
@@ -101,7 +104,8 @@ def get_cartoons_by_id(db, id):
                 row['certificate'],
                 row['duration'],
                 row['runtime'],
-                row['tags']
+                row['tags'],
+                row['trailer']
             )
 
 
@@ -111,7 +115,7 @@ def update_cartoon(db, cartoon):
         cursor.execute('''UPDATE cartoons SET image = :image, title = :title, release_year = :release_year, country = :country,
         method_of_creation = :method_of_creation, director = :director, genres = :genres,
         brief_description = :brief_description, certificate = :certificate, duration = :duration, runtime = :runtime,
-        tags = :tags WHERE id = :id''',
+        tags = :tags, trailer = :trailer WHERE id = :id''',
                        {'id': cartoon.id,
                         'image': cartoon.image,
                         'title': cartoon.title,
@@ -124,7 +128,8 @@ def update_cartoon(db, cartoon):
                         'certificate': cartoon.certificate,
                         'duration': cartoon.duration,
                         'runtime': cartoon.runtime,
-                        'tags': cartoon.tags})
+                        'tags': cartoon.tags,
+                        'trailer': cartoon.trailer})
         db.commit()
 
 

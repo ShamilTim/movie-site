@@ -26,7 +26,8 @@ def init_db(db):
             brief_description TEXT NOT NULL,
             certificate TEXT NOT NULL,
             runtime TEXT NOT NULL,
-            tags TEXT NOT NULL
+            tags TEXT NOT NULL,
+            trailer TEXT NOT NULL 
         );
         ''')
         db.commit()
@@ -36,7 +37,7 @@ def get_feature_films(db):
     with db:
         cursor = db.cursor()
         cursor.execute('''SELECT id, image, title, release_year, country, director, main_roles, genres, box_office,
-        brief_description, certificate, runtime, tags FROM feature_films''')
+        brief_description, certificate, runtime, tags, trailer FROM feature_films''')
         items = []
         for row in cursor:
             items.append(
@@ -53,7 +54,8 @@ def get_feature_films(db):
                     row['brief_description'],
                     row['certificate'],
                     row['runtime'],
-                    row['tags']
+                    row['tags'],
+                    row['trailer']
                 )
             )
         return items
@@ -64,8 +66,8 @@ def add_feature(db, feature_films):
         cursor = db.cursor()
         cursor.execute('''
         INSERT INTO feature_films(id, image, title, release_year, country, director, main_roles, genres, box_office,
-        brief_description, certificate, runtime, tags) VALUES (:id, :image, :title, :release_year, :country, :director,
-         :main_roles, :genres, :box_office, :brief_description, :certificate, :runtime, :tags)''',
+        brief_description, certificate, runtime, tags, trailer) VALUES (:id, :image, :title, :release_year, :country, :director,
+         :main_roles, :genres, :box_office, :brief_description, :certificate, :runtime, :tags, :trailer)''',
                        {'id': feature_films.id,
                         'image': feature_films.image,
                         'title': feature_films.title,
@@ -78,7 +80,8 @@ def add_feature(db, feature_films):
                         'brief_description': feature_films.brief_description,
                         'certificate': feature_films.certificate,
                         'runtime': feature_films.runtime,
-                        'tags': feature_films.tags})
+                        'tags': feature_films.tags,
+                        'trailer': feature_films.trailer})
         db.commit()
 
 
@@ -86,7 +89,7 @@ def get_feature_by_id(db, id):
     with db:
         cursor = db.cursor()
         cursor.execute('''SELECT id, image, title, release_year, country, director, main_roles, genres, box_office,
-        brief_description, certificate, runtime, tags FROM feature_films WHERE id = :id''', {'id': id})
+        brief_description, certificate, runtime, tags, trailer FROM feature_films WHERE id = :id''', {'id': id})
         for row in cursor:
             return Feature(
                 row['id'],
@@ -101,7 +104,8 @@ def get_feature_by_id(db, id):
                 row['brief_description'],
                 row['certificate'],
                 row['runtime'],
-                row['tags']
+                row['tags'],
+                row['trailer']
             )
 
 
@@ -110,7 +114,8 @@ def update_feature(db, feature_film):
         cursor = db.cursor()
         cursor.execute('''UPDATE feature_films SET image = :image, title = :title, release_year = :release_year,
         country = :country, director = :director, main_roles = :main_roles, genres = :genres, box_office = :box_office,
-        brief_description = :brief_description, certificate = :certificate, runtime = :runtime, tags = :tags
+        brief_description = :brief_description, certificate = :certificate, runtime = :runtime, tags = :tags,
+        trailer = :trailer
         WHERE id = :id''', {'id': feature_film.id,
                             'image': feature_film.image,
                             'title': feature_film.title,
@@ -123,7 +128,8 @@ def update_feature(db, feature_film):
                             'brief_description': feature_film.brief_description,
                             'certificate': feature_film.certificate,
                             'runtime': feature_film.runtime,
-                            'tags': feature_film.tags})
+                            'tags': feature_film.tags,
+                            'trailer': feature_film.trailer})
         db.commit()
 
 

@@ -24,7 +24,8 @@ def init_db(db):
             brief_description TEXT NOT NULL,
             certificate TEXT NOT NULL,
             runtime TEXT NOT NULL,
-            tags TEXT NOT NULL
+            tags TEXT NOT NULL,
+            trailer TEXT NOT NULL 
         );
         ''')
         db.commit()
@@ -34,7 +35,7 @@ def get_documentary_films(db):
     with db:
         cursor = db.cursor()
         cursor.execute('''SELECT id, image, title, release_year, country, director, category, brief_description,
-        certificate, runtime, tags FROM documentary_films''')
+        certificate, runtime, tags, trailer FROM documentary_films''')
         items = []
         for row in cursor:
             items.append(
@@ -49,7 +50,8 @@ def get_documentary_films(db):
                     row['brief_description'],
                     row['certificate'],
                     row['runtime'],
-                    row['tags']
+                    row['tags'],
+                    row['trailer']
                 )
             )
         return items
@@ -60,8 +62,8 @@ def add_documentary(db, documentary_films):
         cursor = db.cursor()
         cursor.execute('''
         INSERT INTO documentary_films(id, image, title, release_year, country, director, category, brief_description,
-        certificate, runtime, tags) VALUES (:id, :image, :title, :release_year, :country, :director, :category,
-        :brief_description, :certificate, :runtime, :tags)''',
+        certificate, runtime, tags, trailer) VALUES (:id, :image, :title, :release_year, :country, :director, :category,
+        :brief_description, :certificate, :runtime, :tags, :trailer)''',
                        {'id': documentary_films.id,
                         'image': documentary_films.image,
                         'title': documentary_films.title,
@@ -72,7 +74,8 @@ def add_documentary(db, documentary_films):
                         'brief_description': documentary_films.brief_description,
                         'certificate': documentary_films.certificate,
                         'runtime': documentary_films.runtime,
-                        'tags': documentary_films.tags})
+                        'tags': documentary_films.tags,
+                        'trailer': documentary_films.trailer})
         db.commit()
 
 
@@ -80,7 +83,7 @@ def get_documentary_by_id(db, id):
     with db:
         cursor = db.cursor()
         cursor.execute('''SELECT id, image, title, release_year, country, director, category, brief_description,
-        certificate, runtime, tags FROM documentary_films WHERE id = :id''', {'id': id})
+        certificate, runtime, tags, trailer FROM documentary_films WHERE id = :id''', {'id': id})
         for row in cursor:
             return Documentary(
                 row['id'],
@@ -93,7 +96,8 @@ def get_documentary_by_id(db, id):
                 row['brief_description'],
                 row['certificate'],
                 row['runtime'],
-                row['tags']
+                row['tags'],
+                row['trailer']
             )
 
 
@@ -102,7 +106,7 @@ def update_documentary(db, documentary_film):
         cursor = db.cursor()
         cursor.execute('''UPDATE documentary_films SET image = :image, title = :title, release_year = :release_year,
         country = :country, director = :director, category = :category, brief_description = :brief_description,
-        certificate = :certificate, runtime = :runtime, tags = :tags WHERE id = :id''',
+        certificate = :certificate, runtime = :runtime, tags = :tags, trailer = :trailer WHERE id = :id''',
                        {'id': documentary_film.id,
                         'image': documentary_film.image,
                         'title': documentary_film.title,
@@ -113,7 +117,8 @@ def update_documentary(db, documentary_film):
                         'brief_description': documentary_film.brief_description,
                         'certificate': documentary_film.certificate,
                         'runtime': documentary_film.runtime,
-                        'tags': documentary_film.tags})
+                        'tags': documentary_film.tags,
+                        'trailer': documentary_film.trailer})
         db.commit()
 
 
