@@ -13,69 +13,83 @@
 <div class="container">
     <div class="row">
         <div class="col pt-5">
-            <h1>Add Cartoon</h1>
-            <form action="{{ url_for('add_cartoon') }}" method="post">
-                <div class="form-group">
-                    <label for="title"><b>Title</b></label>
-                    <input name="title" type="text" class="form-control" id="title" placeholder="Enter Title" required>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="release_year"><b>Release Year</b></label>
-                        <input name="release_year" type="text" class="form-control" id="release_year"
-                               placeholder="Enter Release Year" required>
+            <div class="card">
+                <h5 class="card-header">Add Cartoon</h5>
+                <form action="{{ url_for('add_cartoon') }}" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                        <div class="card mb-3" >
+                          <div class="row no-gutters">
+                            <div class="col-md-3">
+                                <div class="form-group" align="center">
+                                    <label for="file"><b>Image</b></label>
+                                    <input type="file" class="form-control-file" name="file" value="Upload" placeholder="Image">
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                              <div class="card-body">
+                                <h5 class="card-title"></h5>
+                                  <table style="table-layout: fixed" class="table table-sm table-borderless">
+                                      <tbody>
+                                          <tr>
+                                              <th style="width: 20px" align="left"><label for="title">Title: </label></th>
+                                              <td style="width: 80px" align="left"><input name="title" type="text" class="form-control" id="title" placeholder="Enter Title" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="release_year">Release Year: </label></th>
+                                              <td><input name="release_year" type="text" class="form-control" id="release_year" placeholder="Enter Release Year" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="country">Country: </label></th>
+                                              <td><input name="country" type="text" class="form-control" id="country" placeholder="Enter Country" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="method_of_creation">Method of creation: </label></th>
+                                              <td><input name="method_of_creation" type="text" class="form-control" id="method_of_creation" placeholder="Enter Method of creation" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="director">Director: </label></th>
+                                              <td><input name="director" type="text" class="form-control" id="director" placeholder="Enter Director" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="genres">Genres: </label></th>
+                                              <td><input name="genres" type="text" class="form-control" id="genres" placeholder="Enter Genres" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="brief_description">Brief Description: </label></th>
+                                              <td><textarea name="brief_description" class="form-control" id="brief_description" placeholder="Enter Brief Description" rows="3" required></textarea></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="certificate">Certificate: </label></th>
+                                              <td><input name="certificate" type="text" class="form-control" id="certificate" placeholder="Enter Certificate" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="duration">Duration: </label></th>
+                                              <td><input name="duration" type="text" class="form-control" id="duration" placeholder="Enter Duration" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="runtime">Runtime: </label></th>
+                                              <td><input name="runtime" type="text" class="form-control" id="runtime" placeholder="Enter Runtime" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th><label for="tags">Tags: </label></th>
+                                              <td><input name="tags" type="text" class="form-control" id="tags" placeholder="Enter Tags" required></td>
+                                          </tr>
+                                          <tr>
+                                              <th></th>
+                                              <td><button class="btn btn-outline-success">Save</button></td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                        <a href="{{ url_for('index') }}"><button style="margin-top: 10px" type="button"
+                                                                 class="btn btn-outline-primary">Home Page</button></a>
+                        </div>
                     </div>
-                    <div class="form-group col-md-2">
-                        <label for="country"><b>Country</b></label>
-                        <input name="country" type="text" class="form-control" id="country" placeholder="Enter Country">
-                    </div>
-                    <div class="form-group col-md-8">
-                        <label for="method_of_creation"><b>Method of creation</b></label>
-                        <input name="method_of_creation" type="text" class="form-control" id="method_of_creation"
-                               placeholder="Enter Method of creation" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-3">
-                        <label for="director"><b>Director</b></label>
-                        <input name="director" type="text" class="form-control" id="director"
-                               placeholder="Enter Director" required>
-                    </div>
-                    <div class="form-group col-md-9">
-                        <label for="genres"><b>Genres</b></label>
-                        <input name="genres" type="text" class="form-control" id="genres"
-                               placeholder="Enter Genres" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="brief_description"><b>Brief Description</b></label>
-                    <textarea name="brief_description" class="form-control" id="brief_description"
-                              placeholder="Enter Brief Description" rows="3" required></textarea>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-2">
-                        <label for="certificate"><b>Certificate</b></label>
-                        <input name="certificate" type="text" class="form-control" id="certificate"
-                               placeholder="Enter Certificate" required>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="duration"><b>Duration</b></label>
-                        <input name="duration" type="text" class="form-control" id="duration"
-                               placeholder="Enter Duration" required>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="runtime"><b>Runtime</b></label>
-                        <input name="runtime" type="text" class="form-control" id="runtime" placeholder="Enter Runtime"
-                               required>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="tags"><b>Tags</b></label>
-                        <input name="tags" type="text" class="form-control" id="tags" placeholder="Enter Tags" required>
-                    </div>
-                </div>
-                <button class="btn btn-outline-success" style="margin-bottom: 10px">Save</button>
-            </form>
-            <a href="{{ url_for('index') }}"><button style="margin-bottom: 10px" type="button" class="btn btn-outline-primary">Home Page</button></a>
+                </form>
             </div>
         </div>
     </div>

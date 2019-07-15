@@ -15,6 +15,7 @@ def init_db(db):
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS feature_films(
             id TEXT PRIMARY KEY,
+            image TEXT NOT NULL,
             title TEXT NOT NULL,
             release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
             country TEXT NOT NULL,
@@ -32,13 +33,14 @@ def init_db(db):
 def get_documentary_films(db):
     with db:
         cursor = db.cursor()
-        cursor.execute('''SELECT id, title, release_year, country, director, category, brief_description, certificate, 
-        runtime, tags FROM documentary_films''')
+        cursor.execute('''SELECT id, image, title, release_year, country, director, category, brief_description,
+        certificate, runtime, tags FROM documentary_films''')
         items = []
         for row in cursor:
             items.append(
                 Documentary(
                     row['id'],
+                    row['image'],
                     row['title'],
                     row['release_year'],
                     row['country'],
@@ -57,10 +59,11 @@ def add_documentary(db, documentary_films):
     with db:
         cursor = db.cursor()
         cursor.execute('''
-        INSERT INTO documentary_films(id, title, release_year, country, director, category, brief_description, certificate,
-        runtime, tags) VALUES (:id, :title, :release_year, :country, :director, :category, :brief_description, :certificate,
-        :runtime, :tags)''',
+        INSERT INTO documentary_films(id, image, title, release_year, country, director, category, brief_description,
+        certificate, runtime, tags) VALUES (:id, :image, :title, :release_year, :country, :director, :category,
+        :brief_description, :certificate, :runtime, :tags)''',
                        {'id': documentary_films.id,
+                        'image': documentary_films.image,
                         'title': documentary_films.title,
                         'release_year': documentary_films.release_year,
                         'country': documentary_films.country,
@@ -76,11 +79,12 @@ def add_documentary(db, documentary_films):
 def get_documentary_by_id(db, id):
     with db:
         cursor = db.cursor()
-        cursor.execute('''SELECT id, title, release_year, country, director, category, brief_description, certificate,
-        runtime, tags FROM documentary_films WHERE id = :id''', {'id': id})
+        cursor.execute('''SELECT id, image, title, release_year, country, director, category, brief_description,
+        certificate, runtime, tags FROM documentary_films WHERE id = :id''', {'id': id})
         for row in cursor:
             return Documentary(
                 row['id'],
+                row['image'],
                 row['title'],
                 row['release_year'],
                 row['country'],
@@ -96,14 +100,20 @@ def get_documentary_by_id(db, id):
 def update_documentary(db, documentary_film):
     with db:
         cursor = db.cursor()
-        cursor.execute('''UPDATE documentary_films SET title = :title, release_year = :release_year, country = :country,
-        director = :director, category = :category, brief_description = :brief_description, certificate = :certificate,
-        runtime = :runtime, tags = :tags WHERE id = :id''',
-        {'id': documentary_film.id, 'title': documentary_film.title, 'release_year': documentary_film.release_year,
-         'country': documentary_film.country, 'director': documentary_film.director,
-         'category': documentary_film.category, 'brief_description': documentary_film.brief_description,
-         'certificate': documentary_film.certificate, 'runtime': documentary_film.runtime,
-         'tags': documentary_film.tags})
+        cursor.execute('''UPDATE documentary_films SET image = :image, title = :title, release_year = :release_year,
+        country = :country, director = :director, category = :category, brief_description = :brief_description,
+        certificate = :certificate, runtime = :runtime, tags = :tags WHERE id = :id''',
+                       {'id': documentary_film.id,
+                        'image': documentary_film.image,
+                        'title': documentary_film.title,
+                        'release_year': documentary_film.release_year,
+                        'country': documentary_film.country,
+                        'director': documentary_film.director,
+                        'category': documentary_film.category,
+                        'brief_description': documentary_film.brief_description,
+                        'certificate': documentary_film.certificate,
+                        'runtime': documentary_film.runtime,
+                        'tags': documentary_film.tags})
         db.commit()
 
 

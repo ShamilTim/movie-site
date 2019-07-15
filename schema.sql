@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS feature_films(
     id TEXT PRIMARY KEY,
+    image TEXT NOT NULL,
     title TEXT NOT NULL,
     release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
     country TEXT NOT NULL,
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS feature_films(
 
 CREATE TABLE IF NOT EXISTS documentary_films(
     id TEXT PRIMARY KEY,
+    image TEXT NOT NULL,
     title TEXT NOT NULL,
     release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
     country TEXT NOT NULL,
@@ -28,6 +30,7 @@ CREATE TABLE IF NOT EXISTS documentary_films(
 
 CREATE TABLE IF NOT EXISTS cartoons(
     id TEXT PRIMARY KEY,
+    image TEXT NOT NULL,
     title TEXT NOT NULL,
     release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
     country TEXT NOT NULL,

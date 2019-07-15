@@ -41,6 +41,9 @@
                                placeholder="Search">
                     </div>
                 </form>
+                <div><a href="{{ url_for('export_csv_films') }}"><button style="margin-bottom: 10px" type="button" class="btn btn-outline-info"
+                >Export CSV</button></a>
+                </div>
             </div>
         </div>
         <div class="card text-center">
@@ -61,7 +64,7 @@
                 </ul>
             </div>
             <table class="table">
-                <thread>
+                <thead>
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
@@ -71,7 +74,7 @@
                         <th scope="col">Certificate</th>
                         <th scope="col">Runtime</th>
                     </tr>
-                </thread>
+                </thead>
                 <tbody>
                 {% for film in films %}
                     <tr>

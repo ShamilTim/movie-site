@@ -19,7 +19,10 @@
                     <div class="card mb-3" >
                       <div class="row no-gutters">
                         <div class="col-md-3">
-                          <img src="..." class="card-img" alt="...">
+                          {% if feature_film.image %}
+                              <img src="{{ url_for('static', filename='images/' + feature_film.image) }}"
+                                   class="card-img" alt="No picture">
+                          {% endif %}
                         </div>
                         <div class="col-md-9">
                           <div class="card-body">

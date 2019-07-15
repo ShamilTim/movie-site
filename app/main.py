@@ -5,13 +5,23 @@ import uuid
 
 import waitress
 from flask import Flask, render_template, request, redirect, url_for, make_response
+from werkzeug.utils import secure_filename
 
 from app import db_feature, db_films, db_documentary, db_cartoons
 from app.domain import Feature, Documentary, Cartoon
 
+UPLOAD_FOLDER = 'app/static/images'
+ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png', 'tif', 'tiff', 'gif'])
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
 
 def start():
     app = Flask(__name__)
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     db_url = 'db.sqlite'
 
     @app.route("/", methods=['GET'])
@@ -57,6 +67,11 @@ def start():
 
     @app.route('/add_feature', methods=['POST'])
     def add_feature():
+        image = None
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            image = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], image))
         title = request.form['title']
         release_year = int(request.form['release_year'])
         country = request.form['country']
@@ -69,7 +84,7 @@ def start():
         runtime = request.form['runtime']
         tags = request.form['tags']
         id = str(uuid.uuid4())
-        feature_film = Feature(id, title, release_year, country, director, main_roles, genres, box_office,
+        feature_film = Feature(id, image, title, release_year, country, director, main_roles, genres, box_office,
                                brief_description, certificate, runtime, tags)
         db_feature.add_feature(db_feature.open_db(db_url), feature_film)
         return redirect(url_for('index_feature'))
@@ -80,6 +95,11 @@ def start():
 
     @app.route('/add_documentary', methods=['POST'])
     def add_documentary():
+        image = None
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            image = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], image))
         title = request.form['title']
         release_year = int(request.form['release_year'])
         country = request.form['country']
@@ -90,7 +110,7 @@ def start():
         runtime = request.form['runtime']
         tags = request.form['tags']
         uuid_id = str(uuid.uuid4())
-        documentary_film = Documentary(uuid_id, title, release_year, country, director, category, brief_description,
+        documentary_film = Documentary(uuid_id, image, title, release_year, country, director, category, brief_description,
                                        certificate, runtime, tags)
         db_documentary.add_documentary(db_documentary.open_db(db_url), documentary_film)
         return redirect(url_for('index_documentary'))
@@ -101,6 +121,11 @@ def start():
 
     @app.route('/add_cartoon', methods=['POST'])
     def add_cartoon():
+        image = None
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            image = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], image))
         title = request.form['title']
         release_year = int(request.form['release_year'])
         country = request.form['country']
@@ -113,7 +138,7 @@ def start():
         runtime = request.form['runtime']
         tags = request.form['tags']
         uuid_id = str(uuid.uuid4())
-        cartoon = Cartoon(uuid_id, title, release_year, country, method_of_creation, director, genres, brief_description,
+        cartoon = Cartoon(uuid_id, image, title, release_year, country, method_of_creation, director, genres, brief_description,
                           certificate, duration, runtime, tags)
         db_cartoons.add_cartoon(db_cartoons.open_db(db_url), cartoon)
         return redirect(url_for('index_cartoons'))
@@ -140,6 +165,11 @@ def start():
 
     @app.route("/edit_feature/<id>", methods=['POST'])
     def edit_feature(id):
+        image = None
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            image = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], image))
         title = request.form['title']
         release_year = int(request.form['release_year'])
         country = request.form['country']
@@ -151,7 +181,7 @@ def start():
         certificate = request.form['certificate']
         runtime = request.form['runtime']
         tags = request.form['tags']
-        feature_film = Feature(id, title, release_year, country, director, main_roles, genres, box_office,
+        feature_film = Feature(id, image, title, release_year, country, director, main_roles, genres, box_office,
                                brief_description, certificate, runtime, tags)
         db_feature.update_feature(db_feature.open_db(db_url), feature_film)
         return redirect(url_for('details_feature_by_id', id=id))
@@ -163,6 +193,11 @@ def start():
 
     @app.route("/edit_documentary/<id>", methods=['POST'])
     def edit_documentary(id):
+        image = None
+        file = request.files['file']
+        if file and allowed_file(file.filename):
+            image = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], image))
         title = request.form['title']
         release_year = int(request.form['release_year'])
         country = request.form['country']
@@ -172,7 +207,7 @@ def start():
         certificate = request.form['certificate']
         runtime = request.form['runtime']
         tags = request.form['tags']
-        documentary_film = Documentary(id, title, release_year, country, director, category, brief_description,
+        documentary_film = Documentary(id, image, title, release_year, country, director, category, brief_description,
                                        certificate, runtime, tags)
         db_documentary.update_documentary(db_documentary.open_db(db_url), documentary_film)
         return redirect(url_for('details_documentary_by_id', id=id))
@@ -184,6 +219,11 @@ def start():
 
     @app.route("/edit_cartoon/<id>", methods=['POST'])
     def edit_cartoon(id):
+        file = request.files['file']
+        image = None
+        if file and allowed_file(file.filename):
+            image = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], image))
         title = request.form['title']
         release_year = int(request.form['release_year'])
         country = request.form['country']
@@ -195,8 +235,8 @@ def start():
         duration = request.form['duration']
         runtime = request.form['runtime']
         tags = request.form['tags']
-        cartoon = Cartoon(id, title, release_year, country, method_of_creation, director, genres,
-                               brief_description, certificate, duration, runtime, tags)
+        cartoon = Cartoon(id, image, title, release_year, country, method_of_creation, director, genres,
+                          brief_description, certificate, duration, runtime, tags)
         db_cartoons.update_cartoon(db_cartoons.open_db(db_url), cartoon)
         return redirect(url_for('details_cartoon_by_id', id=id))
 
@@ -230,8 +270,22 @@ def start():
         db_cartoons.remove_cartoon(db_cartoons.open_db(db_url), id)
         return redirect(url_for('index'))
 
-    @app.route('/export_csv')
-    def export_csv():
+    @app.route('/export_csv_films')
+    def export_csv_films():
+        films = db_films.get_films(db_films.open_db(db_url))
+        content = io.StringIO()
+        writer = csv.writer(content)
+        for film in films:
+            writer.writerow([film.id, film.title, film.release_year, film.country, film.brief_description,
+                             film.certificate, film.runtime,
+                             ])
+        response = make_response(content.getvalue())
+        response.headers['Content-Type'] = 'application/octet-stream'
+        response.headers['Content-Disposition'] = 'inline; filename=exported_films.csv'
+        return response
+
+    @app.route('/export_csv_feature')
+    def export_csv_feature():
         feature_films = db_feature.get_feature_films(db_feature.open_db(db_url))
         content = io.StringIO()
         writer = csv.writer(content)
@@ -243,7 +297,38 @@ def start():
                              ])
         response = make_response(content.getvalue())
         response.headers['Content-Type'] = 'application/octet-stream'
-        response.headers['Content-Disposition'] = 'inline; filename=exported.csv'
+        response.headers['Content-Disposition'] = 'inline; filename=exported_feature.csv'
+        return response
+
+    @app.route('/export_csv_documentary')
+    def export_csv_documentary():
+        documentary_films = db_documentary.get_documentary_films(db_documentary.open_db(db_url))
+        content = io.StringIO()
+        writer = csv.writer(content)
+        for documentary_film in documentary_films:
+            writer.writerow([documentary_film.id, documentary_film.title, documentary_film.release_year,
+                             documentary_film.country, documentary_film.director, documentary_film.category,
+                             documentary_film.brief_description, documentary_film.certificate, documentary_film.runtime,
+                             documentary_film.tags
+                             ])
+        response = make_response(content.getvalue())
+        response.headers['Content-Type'] = 'application/octet-stream'
+        response.headers['Content-Disposition'] = 'inline; filename=exported_documentary.csv'
+        return response
+
+    @app.route('/export_csv_cartoons')
+    def export_csv_cartoons():
+        cartoons = db_cartoons.get_cartoons(db_cartoons.open_db(db_url))
+        content = io.StringIO()
+        writer = csv.writer(content)
+        for cartoon in cartoons:
+            writer.writerow([cartoon.id, cartoon.title, cartoon.release_year, cartoon.country,
+                             cartoon.method_of_creation, cartoon.director, cartoon.genres, cartoon.brief_description,
+                             cartoon.certificate, cartoon.duration, cartoon.runtime, cartoon.tags
+                             ])
+        response = make_response(content.getvalue())
+        response.headers['Content-Type'] = 'application/octet-stream'
+        response.headers['Content-Disposition'] = 'inline; filename=exported_cartoons.csv'
         return response
 
     if os.getenv('APP_ENV') == 'PROD' and os.getenv('PORT'):

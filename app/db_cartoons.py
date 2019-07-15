@@ -15,6 +15,7 @@ def init_db(db):
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS cartoons(
             id TEXT PRIMARY KEY,
+            image TEXT NOT NULL,
             title TEXT NOT NULL,
             release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
             country TEXT NOT NULL,
@@ -34,13 +35,14 @@ def init_db(db):
 def get_cartoons(db):
     with db:
         cursor = db.cursor()
-        cursor.execute('''SELECT id, title, release_year, country, method_of_creation, director, genres,
+        cursor.execute('''SELECT id, image, title, release_year, country, method_of_creation, director, genres,
         brief_description, certificate, duration, runtime, tags FROM cartoons''')
         items = []
         for row in cursor:
             items.append(
                 Cartoon(
                     row['id'],
+                    row['image'],
                     row['title'],
                     row['release_year'],
                     row['country'],
@@ -61,10 +63,11 @@ def add_cartoon(db, cartoons):
     with db:
         cursor = db.cursor()
         cursor.execute('''
-        INSERT INTO cartoons(id, title, release_year, country, method_of_creation, director, genres, brief_description,
-        certificate, duration, runtime, tags) VALUES (:id, :title, :release_year, :country, :method_of_creation, :director,
+        INSERT INTO cartoons(id, image, title, release_year, country, method_of_creation, director, genres, brief_description,
+        certificate, duration, runtime, tags) VALUES (:id, :image, :title, :release_year, :country, :method_of_creation, :director,
         :genres, :brief_description, :certificate, :duration, :runtime, :tags)''',
                        {'id': cartoons.id,
+                        'image': cartoons.image,
                         'title': cartoons.title,
                         'release_year': cartoons.release_year,
                         'country': cartoons.country,
@@ -82,11 +85,12 @@ def add_cartoon(db, cartoons):
 def get_cartoons_by_id(db, id):
     with db:
         cursor = db.cursor()
-        cursor.execute('''SELECT id, title, release_year, country, method_of_creation, director, genres,
+        cursor.execute('''SELECT id, image, title, release_year, country, method_of_creation, director, genres,
         brief_description, certificate, duration, runtime, tags FROM cartoons WHERE id = :id''', {'id': id})
         for row in cursor:
             return Cartoon(
                 row['id'],
+                row['image'],
                 row['title'],
                 row['release_year'],
                 row['country'],
@@ -104,16 +108,23 @@ def get_cartoons_by_id(db, id):
 def update_cartoon(db, cartoon):
     with db:
         cursor = db.cursor()
-        cursor.execute('''UPDATE cartoons SET title = :title, release_year = :release_year, country = :country,
+        cursor.execute('''UPDATE cartoons SET image = :image, title = :title, release_year = :release_year, country = :country,
         method_of_creation = :method_of_creation, director = :director, genres = :genres,
         brief_description = :brief_description, certificate = :certificate, duration = :duration, runtime = :runtime,
         tags = :tags WHERE id = :id''',
-                       {'id': cartoon.id, 'title': cartoon.title, 'release_year': cartoon.release_year,
+                       {'id': cartoon.id,
+                        'image': cartoon.image,
+                        'title': cartoon.title,
+                        'release_year': cartoon.release_year,
                         'country': cartoon.country,
-                        'method_of_creation': cartoon.method_of_creation, 'director': cartoon.director,
+                        'method_of_creation': cartoon.method_of_creation,
+                        'director': cartoon.director,
                         'genres': cartoon.genres,
-                        'brief_description': cartoon.brief_description, 'certificate': cartoon.certificate,
-                        'duration': cartoon.duration, 'runtime': cartoon.runtime, 'tags': cartoon.tags})
+                        'brief_description': cartoon.brief_description,
+                        'certificate': cartoon.certificate,
+                        'duration': cartoon.duration,
+                        'runtime': cartoon.runtime,
+                        'tags': cartoon.tags})
         db.commit()
 
 

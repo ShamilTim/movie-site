@@ -15,6 +15,7 @@ def init_db(db):
         cursor.execute('''
         CREATE TABLE IF NOT EXISTS feature_films(
             id TEXT PRIMARY KEY,
+            image TEXT NOT NULL,
             title TEXT NOT NULL,
             release_year INTEGER NOT NULL CHECK ( release_year > 1894 AND release_year < 2025 ),
             country TEXT NOT NULL,
@@ -34,13 +35,14 @@ def init_db(db):
 def get_feature_films(db):
     with db:
         cursor = db.cursor()
-        cursor.execute('''SELECT id, title, release_year, country, director, main_roles, genres, box_office,
+        cursor.execute('''SELECT id, image, title, release_year, country, director, main_roles, genres, box_office,
         brief_description, certificate, runtime, tags FROM feature_films''')
         items = []
         for row in cursor:
             items.append(
                 Feature(
                     row['id'],
+                    row['image'],
                     row['title'],
                     row['release_year'],
                     row['country'],
@@ -54,7 +56,6 @@ def get_feature_films(db):
                     row['tags']
                 )
             )
-        print(items)
         return items
 
 
@@ -62,10 +63,11 @@ def add_feature(db, feature_films):
     with db:
         cursor = db.cursor()
         cursor.execute('''
-        INSERT INTO feature_films(id, title, release_year, country, director, main_roles, genres, box_office,
-        brief_description, certificate, runtime, tags) VALUES (:id, :title, :release_year, :country, :director, :main_roles,
-        :genres, :box_office, :brief_description, :certificate, :runtime, :tags)''',
+        INSERT INTO feature_films(id, image, title, release_year, country, director, main_roles, genres, box_office,
+        brief_description, certificate, runtime, tags) VALUES (:id, :image, :title, :release_year, :country, :director,
+         :main_roles, :genres, :box_office, :brief_description, :certificate, :runtime, :tags)''',
                        {'id': feature_films.id,
+                        'image': feature_films.image,
                         'title': feature_films.title,
                         'release_year': feature_films.release_year,
                         'country': feature_films.country,
@@ -83,11 +85,12 @@ def add_feature(db, feature_films):
 def get_feature_by_id(db, id):
     with db:
         cursor = db.cursor()
-        cursor.execute('''SELECT id, title, release_year, country, director, main_roles, genres, box_office,
+        cursor.execute('''SELECT id, image, title, release_year, country, director, main_roles, genres, box_office,
         brief_description, certificate, runtime, tags FROM feature_films WHERE id = :id''', {'id': id})
         for row in cursor:
             return Feature(
                 row['id'],
+                row['image'],
                 row['title'],
                 row['release_year'],
                 row['country'],
@@ -105,14 +108,22 @@ def get_feature_by_id(db, id):
 def update_feature(db, feature_film):
     with db:
         cursor = db.cursor()
-        cursor.execute('''UPDATE feature_films SET title = :title, release_year = :release_year, country = :country,
-        director = :director, main_roles = :main_roles, genres = :genres, box_office = :box_office,
+        cursor.execute('''UPDATE feature_films SET image = :image, title = :title, release_year = :release_year,
+        country = :country, director = :director, main_roles = :main_roles, genres = :genres, box_office = :box_office,
         brief_description = :brief_description, certificate = :certificate, runtime = :runtime, tags = :tags
-        WHERE id = :id''',
-        {'id': feature_film.id, 'title': feature_film.title, 'release_year': feature_film.release_year, 'country': feature_film.country,
-         'director': feature_film.director, 'main_roles': feature_film.main_roles, 'genres': feature_film.genres,
-         'box_office': feature_film.box_office, 'brief_description': feature_film.brief_description,
-         'certificate': feature_film.certificate, 'runtime': feature_film.runtime, 'tags': feature_film.tags})
+        WHERE id = :id''', {'id': feature_film.id,
+                            'image': feature_film.image,
+                            'title': feature_film.title,
+                            'release_year': feature_film.release_year,
+                            'country': feature_film.country,
+                            'director': feature_film.director,
+                            'main_roles': feature_film.main_roles,
+                            'genres': feature_film.genres,
+                            'box_office': feature_film.box_office,
+                            'brief_description': feature_film.brief_description,
+                            'certificate': feature_film.certificate,
+                            'runtime': feature_film.runtime,
+                            'tags': feature_film.tags})
         db.commit()
 
 

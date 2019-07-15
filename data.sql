@@ -1,7 +1,8 @@
-INSERT INTO feature_films(id, title, release_year, country, director, main_roles, genres, box_office, brief_description,
+INSERT INTO feature_films(id, image, title, release_year, country, director, main_roles, genres, box_office, brief_description,
                           certificate, runtime, tags) VALUES
 (
  'cbad028d-2180-4e9d-b217-17d2c26a79e1',
+ '7455db87-35f3-4818-8b87-6856fd0488b1.jpg',
  'The Shawshank Redemption',
  1994,
  'USA',
@@ -16,6 +17,7 @@ INSERT INTO feature_films(id, title, release_year, country, director, main_roles
  ),
 (
  '4b0d6d45-b489-4521-bf6c-a25b529fa2ad',
+ '4ba3fb20-80fa-4db5-89ba-e2ac93e60ff2.jpg',
  'The Green Mile',
  1999,
  'USA',
@@ -30,6 +32,7 @@ INSERT INTO feature_films(id, title, release_year, country, director, main_roles
  ),
 (
  '99a96677-7e62-4d1d-91e4-841312945061',
+ '34ad62e2-2125-41d1-93f7-5dfcaccd65b8.jpg',
  'Forrest Gump',
  '1994',
  'USA',
@@ -43,9 +46,10 @@ INSERT INTO feature_films(id, title, release_year, country, director, main_roles
  'development, kind, military, naive, president, service'
  );
 
-INSERT INTO documentary_films(id, title, release_year, country, director, category, brief_description, certificate, runtime, tags) VALUES
+INSERT INTO documentary_films(id, image, title, release_year, country, director, category, brief_description, certificate, runtime, tags) VALUES
 (
  'f8ccc193-e136-4e5b-a95e-5f887ff02df9',
+ 'b8d7ca32-631f-48ba-a9e9-a1b96e0b8949.jpg',
  'The Brain with Dr. David Eagleman',
  2015,
  'USA',
@@ -58,6 +62,7 @@ INSERT INTO documentary_films(id, title, release_year, country, director, catego
 ),
 (
  'fed1c34a-71a6-497f-b4cc-2ad0c443df95',
+ 'e971c79f-7044-4ad8-80cb-0fc0a94159d9.jpg',
  'Apollo 11',
  2019,
  'USA',
@@ -70,6 +75,7 @@ INSERT INTO documentary_films(id, title, release_year, country, director, catego
 ),
 (
  'd4991c9b-c759-485c-8253-cb14c3a99a0d',
+ 'cbbbcd77-8938-48a3-b7ca-67326741c5ce.jpg',
  'Meeting Gorbachev',
  2018,
  'USA',
@@ -81,10 +87,11 @@ INSERT INTO documentary_films(id, title, release_year, country, director, catego
  'history, USSR, breakup, cold war, GDR(German Democratic Republic)'
 );
 
-INSERT INTO cartoons(id, title, release_year, country, method_of_creation, director, genres, brief_description,
+INSERT INTO cartoons(id, image, title, release_year, country, method_of_creation, director, genres, brief_description,
                  certificate, duration, runtime, tags) VALUES
 (
  '9c004bcb-5e7b-48d3-9fb8-39f3261f0941',
+ '8df02e47-653e-46b6-9f0e-dce126a38368.jpg',
  'The Secret Life of Pets',
  2016,
  'Japan, USA, France',
@@ -99,6 +106,7 @@ INSERT INTO cartoons(id, title, release_year, country, method_of_creation, direc
 ),
 (
  'e50c366c-9da7-42b6-a537-f44efcc634d2',
+ '7c73837f-7a97-4429-9eb0-a5e6497ef2da.jpg',
  '5 centimeters per second',
  2007,
  'Japan',
@@ -113,6 +121,7 @@ INSERT INTO cartoons(id, title, release_year, country, method_of_creation, direc
 ),
 (
  'd0f1f200-a19a-40e4-8c78-54b99332a388',
+ 'f6e2b07f-dbf5-4659-ae8f-aeac83b7fa9c.jpg',
  'Shaun the Sheep Movie',
  2015,
  'UK, France, USA',
