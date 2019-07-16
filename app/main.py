@@ -283,7 +283,7 @@ def start():
         writer = csv.writer(content)
         for film in films:
             writer.writerow([film.id, film.title, film.release_year, film.country, film.brief_description,
-                             film.certificate, film.runtime, film.trailer
+                             film.certificate, film.runtime
                              ])
         response = make_response(content.getvalue())
         response.headers['Content-Type'] = 'application/octet-stream'
